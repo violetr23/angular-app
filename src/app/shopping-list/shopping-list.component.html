@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-10">
+    <app-shopping-edit></app-shopping-edit>
+    <hr>
+    <ul class="list-group">
+      <a 
+       class="list-group-item" 
+       style="cursor: pointer"
+       *ngFor="let ingredient of ingredients"> 
+       {{ ingredient.name }} ({{ ingredient.amount }})
+       <!-- Los () que encapsulan a ingredient.amount
+      no significan nada especial, es solo para que salgan 
+    como texto, para que sea vea (5) por ejemplo -->
+      </a>
+    </ul>
+  </div>
+</div>
