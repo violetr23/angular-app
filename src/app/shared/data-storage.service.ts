@@ -4,19 +4,23 @@ import { map } from 'rxjs/operators';
 
 import { RecipeService } from "../recipes/recipe.service";
 import { Recipe } from "../recipes/recipe.model";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable()
 export class DataStorageService {
     constructor(private http: Http,
-                private recipesService: RecipeService){}
+                private recipesService: RecipeService,
+                private authService: AuthService){}
 
     storeRecipes() {
-      return this.http.put('https://ng-recipe-book-84ec3.firebaseio.com/recipes.json',
+      const token = this.authService.getToken();
+      return this.http.put('https://ng-recipe-book-84ec3.firebaseio.com/recipes.json?auth=' + token,
                       this.recipesService.getRecipes());
     }
 
     getRecipes() {
-        this.http.get('https://ng-recipe-book-84ec3.firebaseio.com/recipes.json')
+        const token = this.authService.getToken();
+        this.http.get('https://ng-recipe-book-84ec3.firebaseio.com/recipes.json?auth=' + token)
          .pipe(map(
              (response: Response) => {
                 const recipes: Recipe[] = response.json();
